@@ -8,8 +8,8 @@
         <version>3.2.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.temporal.demos</groupId>
-    <artifactId>demo-executor</artifactId>
+    <groupId>com.idanshal.demos</groupId>
+    <artifactId>demo-db-temporal-workflow-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <java.version>21</java.version>
