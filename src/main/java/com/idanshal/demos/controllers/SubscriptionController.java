@@ -1,55 +1,34 @@
 package com.idanshal.demos.controllers;
 
-import com.idanshal.demos.workflows.SubscriptionWorkflow;
-import io.temporal.client.WorkflowClient;
-import io.temporal.client.WorkflowOptions;
-import io.temporal.client.WorkflowStub;
-import io.temporal.common.RetryOptions;
+import com.idanshal.demos.services.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/subscription")
 public class SubscriptionController {
 
-    private final WorkflowClient client;
+    private final SubscriptionService subscriptionService;
 
-    private final Map<String, String> subscriptionMap = new HashMap<>();
-
-
-    @PostMapping("/subscribe/{id}")
+    @PostMapping("/{id}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     void subscribe(@PathVariable String id) {
-        String workflowId = String.valueOf(UUID.randomUUID());
-        SubscriptionWorkflow workflow = client.newWorkflowStub(SubscriptionWorkflow.class, WorkflowOptions.newBuilder().
-                setTaskQueue("SubscriptionTaskQueue").setRetryOptions(RetryOptions.newBuilder().
-                        setMaximumAttempts(3).build()).setWorkflowId(workflowId).build());
-
-        WorkflowClient.start(workflow::execute, id);
-        subscriptionMap.put(id, workflowId);
+        subscriptionService.subscribe(id);
     }
 
-    @PostMapping("/cancel/{id}")
-    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    @PutMapping("/upgrade/{id}")
+    void upgrade(@PathVariable String id) {
+        subscriptionService.upgrade(id);
+    }
+
+    @PutMapping("/cancel/{id}")
     void cancel(@PathVariable String id) {
-//        SubscriptionWorkflow subscriptionWorkflow = client.newWorkflowStub(SubscriptionWorkflow.class, subscriptionMap.get(id));
-//        WorkflowStub.fromTyped(subscriptionWorkflow).cancel();
-
-        WorkflowStub workflowStub = client.newUntypedWorkflowStub(subscriptionMap.get(id));
-        workflowStub.cancel();
-
-        //subscriptionWorkflow.cancel(id);
+        subscriptionService.cancel(id);
     }
 }
 

@@ -1,13 +1,9 @@
 server:
   port: 8080
-  servlet:
-    context-path: /demo
 spring:
   application:
-    name: demo-workflow-starter
+    name: demo-sb-temporal-workflow-starter
   temporal:
     namespace: ${namespace:default}
     connection:
       target: ${temporal-frontend:127.0.0.1:7233}
-
-

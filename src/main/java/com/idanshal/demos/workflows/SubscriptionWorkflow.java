@@ -8,7 +8,6 @@ import io.temporal.workflow.WorkflowMethod;
 public interface SubscriptionWorkflow {
     @WorkflowMethod
     void execute(String customerIdentifier);
-
     @SignalMethod
     void approveUpgrade();
 }
