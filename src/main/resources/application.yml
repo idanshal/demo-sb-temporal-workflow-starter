@@ -3,7 +3,16 @@ server:
 spring:
   application:
     name: demo-sb-temporal-workflow-starter
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demo-sb
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
   temporal:
     namespace: ${namespace:default}
     connection:
       target: ${temporal-frontend:127.0.0.1:7233}
+

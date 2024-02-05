@@ -30,6 +30,11 @@ public class SubscriptionController {
     void cancel(@PathVariable String id) {
         subscriptionService.cancel(id);
     }
+
+    @PutMapping("/renew/{id}")
+    void renew(@PathVariable String id) {
+        subscriptionService.renew(id);
+    }
 }
 
 
