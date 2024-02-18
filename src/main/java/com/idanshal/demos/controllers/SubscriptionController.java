@@ -1,5 +1,8 @@
 package com.idanshal.demos.controllers;
 
+import com.idanshal.demos.dto.QueryResponse;
+import com.idanshal.demos.dto.RenewResponse;
+import com.idanshal.demos.dto.SubscribeResponse;
 import com.idanshal.demos.services.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +20,9 @@ public class SubscriptionController {
 
     @PostMapping("/{id}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    void subscribe(@PathVariable String id) {
-        subscriptionService.subscribe(id);
+    SubscribeResponse subscribe(@PathVariable String id) {
+        String workflowId = subscriptionService.subscribe(id);
+        return new SubscribeResponse(workflowId);
     }
 
     @PutMapping("/upgrade/{id}")
@@ -32,8 +36,15 @@ public class SubscriptionController {
     }
 
     @PutMapping("/renew/{id}")
-    void renew(@PathVariable String id) {
-        subscriptionService.renew(id);
+    RenewResponse renew(@PathVariable String id) {
+        String runId = subscriptionService.renew(id);
+        return new RenewResponse(runId);
+    }
+
+    @GetMapping("/query/{id}")
+    QueryResponse query(@PathVariable String id) {
+        int paymentCount = subscriptionService.query(id);
+        return new QueryResponse(paymentCount);
     }
 }
 

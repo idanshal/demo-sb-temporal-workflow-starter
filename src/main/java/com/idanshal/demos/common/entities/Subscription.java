@@ -23,4 +23,6 @@ public class Subscription {
 
     @Enumerated(EnumType.STRING)
     private SubscriptionType subscriptionType;
+
+    private boolean isActive;
 }
