@@ -4,25 +4,13 @@ import com.idanshal.demos.common.entities.Subscription;
 import com.idanshal.demos.common.repository.SubscriptionRepository;
 import com.idanshal.demos.common.workflows.SubscriptionWorkflow;
 import com.idanshal.demos.helpers.WorkflowHelper;
-import io.temporal.api.common.v1.WorkflowExecution;
-import io.temporal.api.history.v1.History;
-import io.temporal.api.history.v1.HistoryEvent;
-import io.temporal.api.workflowservice.v1.GetWorkflowExecutionHistoryRequest;
-import io.temporal.api.workflowservice.v1.GetWorkflowExecutionHistoryResponse;
-import io.temporal.api.workflowservice.v1.ResetWorkflowExecutionRequest;
-import io.temporal.api.workflowservice.v1.ResetWorkflowExecutionResponse;
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
 import io.temporal.client.WorkflowStub;
-import io.temporal.serviceclient.WorkflowServiceStubs;
-import io.temporal.serviceclient.WorkflowServiceStubsOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.Optional;
 import java.util.UUID;
 
 
